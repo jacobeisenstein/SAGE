@@ -1,7 +1,7 @@
 #include <mex.h>
 #include <assert.h>
 #include <math.h>
-#include "util.h"
+#include "3rd-party/util.h"
 
 /*function [theta q_a score lv_score word_score sigma] = tamEStep(x,beta,alpha,a_log_prior,sigma)
   my_counts = [N x 1] term counts for all unique terms in the doc
