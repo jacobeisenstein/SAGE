@@ -1,0 +1,61 @@
+Notes: 
+
+Slight modifications by Jacob Eisenstein on Jan 24 2011.
+Substituted lightspeed's "sample" for the insanely slow discreternd.
+Now works much faster.
+
+
+---------------
+
+Some simple Matlab routines that implement a subset of the methods considered in:
+
+@inproceedings{wallach-murray-rsalakhu-mimno-2009,
+    title  = {Evaluation Methods for Topic Models},
+    author = {Hanna M. Wallach and Iain Murray and Ruslan Salakhutdinov and David Mimno},
+    booktitle = {Proceedings of the 26th International Conference on Machine Learning (ICML)},
+    editor = {L\'{e}on Bottou and Michael Littman},
+    pages = {1105--1112},
+    year = {2009},
+    address = {Montreal},
+    month = {June},
+    publisher = {Omnipress}
+}
+
+
+sanity_demo.m       - checking approximations against exact computation on tiny problems
+
+
+The actual functions for getting p(w|Phi,alpha)
+-----------------------------------------------
+
+ldae_*.m
+
+ldae_chibms.m        - Murray & Salakhutdinov
+ldae_dumb_exact.m    - Sums over all settings of z. Does this in a dumb way. Maybe
+                       redo better code and/or in a different programming language.
+ldae_hm.m            - Harmonic mean
+ldae_is_variants.m   - Various ways of importance sampling z's
+ldae_upper_bound.m   - for synthetic docs, compute log-prob if we know theta. We
+                       can't do better than this (at least on average). But HM
+                       will often claim we are.
+ldae_w2_is_theta.m   - document completion by importance sampling p(theta|w1) to predict w2
+ldae_wei.m           - importance sample theta
+
+ldae_by_discretization_base.m - used for ldae_wei and allows deterministic setting of theta "samples"
+                                HOWEVER, I should use a decent quasi-Monte Carlo algorithm for this.
+                                I didn't find the time.
+ldae_by_discretization.m - dumb discretization of theta space. Doesn't actually
+    work robustly, because the Dirichlet prior is pretty nasty in theta space.
+    (Generic adaptive quadrature has problems in this parameterization too.)
+
+
+Various utility files
+---------------------
+
+dirichlet_grid.m
+dirichletrnd.m
+discreternd.m
+logsumexp.m
+nchoosek_owr.m
+simplex_grid.m
+
