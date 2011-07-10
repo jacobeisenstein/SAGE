@@ -36,7 +36,7 @@ while ~iter.done
         %    word_score = word_score + q_a(a) * scoreWords(my_new_counts',mybeta(:,:,a));
         %end
         %same as above, but faster
-        word_score = q_a * tprod(my_new_counts,[-1 -2],mybeta,[-2 -1 1]);
+        word_score = q_a * tprod(my_new_counts,[-1 -2],mybeta,[-2 -1 1],'n');
         %using mybeta(:,:,1) looks weird, but actually this part is being ignored, we're only using the latent variable score. so this is legit.
         [ig ig2 lv_score] = scoreDoc(my_new_counts',mybeta(:,:,1),myphi,myx,sigma,alpha,dig_sig);
         lv_score = lv_score + q_a * (a_log_prior - log_q_a)';
