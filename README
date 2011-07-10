@@ -8,7 +8,7 @@ See "HOWTO" for how to get started.
 
 This distribution includes borrowed code from lots of other smart people. It's all in the directory called "3rd-party":
 
-1) fastfit and lightspeed are from Tom Minka. These are released under the MIT license.
+1) fastfit, lightspeed, util.h, and util.c are from Tom Minka. These are released under the MIT license.
 2) lda-eval is a slightly-modified version of the LDA evaluation code from Wallach, Murray, Salakhudinov, and Mimno [MIT license]
 3) minimize.m is from Carl Rasmussen 
 4) process_options.m is from Mark A. Paskin, under the GPL 2
