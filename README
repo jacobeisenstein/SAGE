@@ -1,10 +1,12 @@
-This is a soft, soft launch for the distribution of the code from our paper,
+This is a soft launch for the distribution of the code from our paper,
 
 Sparse Additive Generative Models of Text
 Jacob Eisenstein, Amr Ahmed, and Eric P. Xing
 International Conference on Machine Learning, 2011
 
-See "HOWTO" for how to get started.
+Code (c) 2011 Jacob Eisenstein
+Licensed under the Apache License, version 2.0 
+http://www.apache.org/licenses/LICENSE-2.0.html
 
 This distribution includes borrowed code from lots of other smart people. It's all in the directory called "3rd-party":
 
@@ -13,3 +15,5 @@ This distribution includes borrowed code from lots of other smart people. It's a
 3) minimize.m is from Carl Rasmussen 
 4) process_options.m is from Mark A. Paskin, under the GPL 2
 5) tprod is from Jason Farquhar, under the license found in its directory
+
+See "HOWTO" for how to get started.
