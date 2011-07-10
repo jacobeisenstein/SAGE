@@ -1,0 +1,1 @@
+The current version only implements sparse LDA. In the future I will add the naive bayes and multi-faceted models. All of this runs through sparseTAM.m, so in principle you can do it yourself with the code here, but I will try to wrap up the experiments from the ICML paper.
