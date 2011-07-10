@@ -1,0 +1,8 @@
+This should run in Matlab from the same directory in which you find this file. You will need to compile a few mex files:
+
+tamEStepInnerMex.c (optional, but faster)
+utils/termCountsToWordListMex.c (mandatory)
+
+You may also need to compile stuff in fastfit, lightspeed, and tprod, which are all in 3rd-party. There should be instructions in the relevant folders.
+
+When you have all this working, try "runLDA(5,1,500,'debug',1)" from the command line in matlab. This will run standard LDA first, then SAGE LDA. 
