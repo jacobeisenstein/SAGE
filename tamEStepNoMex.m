@@ -1,5 +1,5 @@
-function [sigma q_a out_counts score lv_score word_score sigma] = tamEStepNoMex(x,beta,alpha,a_log_prior,sigma)
-%function [theta q_a out_counts score lv_score word_score sigma] = tamEStepNoMex(x,beta,alpha,a_log_prior,sigma)
+function [sigma q_a out_counts score lv_score word_score] = tamEStepNoMex(x,beta,alpha,a_log_prior,sigma)
+%function [sigma q_a out_counts score lv_score word_score] = tamEStepNoMex(x,beta,alpha,a_log_prior,sigma)
 %
 %this contains a lot of optimizations that make it kind of complicated.
 %maybe i should release a simplified version?
