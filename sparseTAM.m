@@ -83,13 +83,8 @@ while ~iter.done
     computeScore(word_score,estep_lv_score,eta_lv_score,prior_prob,'print',1);
     
     %% M-step.
-    % we do not initialize the etas from their previous values, because
-    % otherwise we get locked into the initialization.
-    % however, this means we can't guarantee that the bound always
-    % improves. thus, we use a deltaiterator
     if A>1 && K > 1, max_its = 1; else max_its = 0; end
     mstep_iter = newIterator(max_its,'thresh',1e-5,'debug',true);
-    %mstep_iter = newDeltaIterator(max_its,'thresh',1e-2,'debug',true);
     if sparse
         eta_t_lv_score = zeros(K,1); eta_a_lv_score = zeros(A,1);
         old_eta_t = eta_t;
