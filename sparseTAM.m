@@ -218,11 +218,11 @@ while ~iter.done
             fprintf('PERPLEX %d: %.5f\n',iter.its,computePerplexity(te_x,pred_topics,alpha));
         end
         if A > 1 && rem(iter.its,5)==1
-            for i = 1:100:size(te_x,1)
+            for i = 1:size(te_x,1)
                 [theta_te(i,:) qa_te(i,:)] = tamEStep(te_x(i,:),eta_sum(:,:,1:max(aspects)),alpha,e_log_a);
             end
-            [ig preds] = max(qa_te(1:100:end,:)');
-            acc = mean(preds==te_aspects(1:100:end));
+            [ig preds] = max(qa_te');
+            acc = mean(preds==te_aspects);
             fprintf('ACC %d: = %.3f\n',iter.its,acc);
         end
     end
