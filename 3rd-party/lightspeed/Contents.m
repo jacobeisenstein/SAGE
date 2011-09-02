@@ -1,6 +1,6 @@
 % Lightspeed Toolbox.  
 % Efficient operations for Matlab programming.
-% Version 2.3   27-Jul-2009
+% Version 2.6   05-May-2011
 % By Tom Minka
 % (c) Microsoft Corporation. All rights reserved. 
 %
@@ -20,11 +20,12 @@
 %   inv_posdef       - Invert positive definite matrix.
 %
 % Statistics
-%   normpdf          - Multivariate normal density.
-%   normpdfln        - Log of multivariate normal density.
+%   mvnormpdf        - Multivariate normal density.
+%   mvnormpdfln      - Log of multivariate normal density.
 %   normcdf          - Normal cumulative distribution.
 %   normcdfln        - Log of normal cumulative distribution.
 %   normcdflogit     - Logit of normal cumulative distribution.
+%   invnormcdf       - Normal quantile function.
 %   wishpdf          - Wishart probability density function.
 %   wishpdfln        - Log of Wishart probability density function.
 %   sample           - Sample from categorical distribution.

@@ -205,7 +205,7 @@ double gammaln2(double x, double d)
   #define M_lnPI 1.14472988584940
   double r = d*(d-1)/4*M_lnPI;
   int i;
-  for(i=0; i<d; i++) r += gammaln(x + (1-i)/2);
+  for(i=0; i<d; i++) r += gammaln(x - 0.5*i);
   return r;
 }
 

@@ -16,10 +16,6 @@
  * MATHWORKS_MATRIX_VAGUE_MXARRAY_HPP
  * existence of blascompat32.h
  */
-#ifdef mxCreateScalarDouble
-#define BLAS64
-#endif
-
 #ifdef BLAS64
 #include "blas.h"
 #else
@@ -39,6 +35,7 @@ void mexFunction(int nlhs, mxArray *plhs[],
 		 int nrhs, const mxArray *prhs[])
 {
   mwSize m,n;
+	ptrdiff_t m64, n64;
 #ifndef BLAS64
 	int im,in;
 #endif
@@ -81,7 +78,9 @@ void mexFunction(int nlhs, mxArray *plhs[],
   memcpy(x,b,m*n*sizeof(double));
   b = x;
 #ifdef BLAS64
-  dtrsm(&side,&uplo,&trans,&diag,&m,&n,&one,T,&m,x,&m);
+	m64 = m;
+	n64 = n;
+  dtrsm(&side,&uplo,&trans,&diag,&m64,&n64,&one,T,&m64,x,&m64);
 #else
 	im = (int)m;
 	in = (int)n;

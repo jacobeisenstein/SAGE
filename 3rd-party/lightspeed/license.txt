@@ -1,4 +1,4 @@
-Fast subroutines for Matlab programs, version 2.3
+Fast subroutines for Matlab programs
 
 This Microsoft Research Shared Source license agreement ("MSR-SSLA") is a legal agreement between you and Microsoft Corporation ("Microsoft" or "we") for the software or data identified above, which may include source code, and any associated materials, text or speech files, associated media and "online" or electronic documentation and any updates we provide in our discretion (together, the "Software"). 
 

@@ -3,10 +3,6 @@
 #include "mex.h"
 #include <string.h>
 
-#ifdef mxCreateScalarDouble
-#define BLAS64
-#endif
-
 #ifdef BLAS64
 #include "blas.h"
 #else

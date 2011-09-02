@@ -52,6 +52,7 @@ if isempty(pattern)
 end
 
 % break the pattern into path components
+pattern = strrep(pattern,'\','/');
 [first,rest] = strtok(pattern,'/');
 % when recursing, remove the leading / from rest
 if ~isempty(rest)

@@ -7,7 +7,7 @@
 void mexFunction(int nlhs, mxArray *plhs[],
 		 int nrhs, const mxArray *prhs[])
 {
-  mwSize ndims, len, i;
+  mwSize ndims, len;
   mwSize *dims;
   double *indata, *outdata;
   long ix,iy,iz;

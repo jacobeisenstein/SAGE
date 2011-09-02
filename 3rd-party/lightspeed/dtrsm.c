@@ -8,12 +8,12 @@
 
 #ifdef UNDERSCORE_LAPACK_CALL
 int dtrsm_(char *side, char *uplo, char *transa, char *diag, 
-	  int *m, int *n, double *alpha, double *a, int *lda, 
-	  double *b, int *ldb)
+					 int *m, int *n, double *alpha, double *a, int *lda, 
+					 double *b, int *ldb)
 #else
-int dtrsm(char *side, char *uplo, char *transa, char *diag, 
-	  int *m, int *n, double *alpha, double *a, int *lda, 
-	  double *b, int *ldb)
+	int dtrsm(char *side, char *uplo, char *transa, char *diag, 
+						int *m, int *n, double *alpha, double *a, int *lda, 
+						double *b, int *ldb)
 #endif
 {
   int i,j,k;
@@ -24,28 +24,29 @@ int dtrsm(char *side, char *uplo, char *transa, char *diag,
     /* Alg 3.1.4 on p90 */
     for(j=0;j<*n;j++) {
       for(k=*m-1;k>=0;k--) {
-	/* if(A(k,k) == 0.) B(k,j) = 0; */
-	if(B(k,j) != 0.) {
-	  B(k,j) /= A(k,k);
-	  for(i=0;i<k;i++) {
-	    B(i,j) -= B(k,j) * A(i,k);
-	  }
-	}
+				/* if(A(k,k) == 0.) B(k,j) = 0; */
+				if(B(k,j) != 0.) {
+					B(k,j) /= A(k,k);
+					for(i=0;i<k;i++) {
+						B(i,j) -= B(k,j) * A(i,k);
+					}
+				}
       }
     }
   } else {
     for(j=0;j<*n;j++) {
       for(k=0;k<*m;k++) {
-	/* if(A(k,k) == 0.) B(k,j) = 0; */
-	if(B(k,j) != 0.) {
-	  B(k,j) /= A(k,k);
-	  for(i=k+1;i<*m;i++) {
-	    B(i,j) -= B(k,j) * A(i,k);
-	  }
-	}
+				/* if(A(k,k) == 0.) B(k,j) = 0; */
+				if(B(k,j) != 0.) {
+					B(k,j) /= A(k,k);
+					for(i=k+1;i<*m;i++) {
+						B(i,j) -= B(k,j) * A(i,k);
+					}
+				}
       }
     }
   }
+	return 0;
 }
 
 #else

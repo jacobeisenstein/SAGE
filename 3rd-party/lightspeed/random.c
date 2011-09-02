@@ -9,13 +9,6 @@
 #define isnan _isnan
 #endif
 
-/*
-*  Generates a uniformly distributed r.v. between 0 and 1.
-*  Kris Popat  6/85
-*  Ref: Applied Statistics, 1982 vol 31 no 2 pp 188-190
-*  Based on FORTRAN routine by H. Malvar.
-*/
-
 /* Sharing a data segment in a DLL:
  * http://msdn2.microsoft.com/en-us/library/h90dkhs0(VS.80).aspx
  * http://www.flounder.com/hooks.htm
@@ -69,6 +62,15 @@ static int RandN_usePrevious = 0;
 #pragma comment(linker,"/section:.seed,rws")
 
 #if 1
+/*
+*  Generates a uniformly distributed r.v. between 0 and 1.
+*  Kris Popat  6/1985
+*  Ref: B. A. Wichmann and I. D. Hill, 
+*  "Algorithm AS 183: An efficient and portable pseudo-random number generator"
+*       Applied Statistics 31(2): 188-190, 1982
+*  Based on FORTRAN routine by H. Malvar.
+*  For Python code, see http://www.python.org/doc/2.3/lib/module-whrandom.html
+*/
 double Rand(void)
 {
   static float u;
@@ -108,6 +110,7 @@ void ResetSeed(void)
 }
 /* Sets the seed for Rand(). 
  * The seed determines the sequence of numbers it generates.
+ * There is no constraint on the values provided, but zero is not recommended.
  */
 void SetSeed(long new_ix, long new_iy, long new_iz)
 {
