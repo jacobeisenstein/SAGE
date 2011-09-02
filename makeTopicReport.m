@@ -1,5 +1,6 @@
 function makeTopicReport(eta,vocab,varargin)
 %function makeTopicReport(eta,vocab,varargin)
+%eta = K x W matrix, K = num-topics, W = num-words
     [N background] = process_options(varargin,'N',10,'background',mean(eta));
     for i = 1:size(eta,1)
         if (size(eta,1)>1), fprintf('%d. ',i); end
