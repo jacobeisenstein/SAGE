@@ -56,7 +56,7 @@ q_a = zeros(D+1,max(aspects)); q_a(end,:) = 1/max(aspects); %prior
 
 eta_lv_score = 0; eta_ta_lv_score = 0; prior_prob = 0;
 %iter = newIterator(max_its,'debug',true,'thresh',1e-5);
-iter = newDeltaIterator(max_its,'debug',true,'thresh',1e-2);
+iter = newDeltaIterator(max_its,'debug',true,'thresh',0);
 ecounts = zeros(W,K,A);
 while ~iter.done
     
@@ -68,9 +68,11 @@ while ~iter.done
         if (rem(i,100)==0), fprintf('+'); end
         old_sigma = sigma(i,:);
         log_p_a = digamma(sum(q_a)) - digamma(sum(sum(q_a)));
-
-        [theta(i,:) q_a(i,:) new_counts sigma(i,:) score doc_lv_score doc_word_score] = tamEStep(x(i,:),eta_sum,alpha,log_p_a,old_sigma);
-        ecounts(:,:,aspects(i)) = ecounts(:,:,aspects(i)) + full(new_counts);
+        
+        %[theta(i,:) q_a(i,:) new_counts sigma(i,:) score doc_lv_score
+        %doc_word_score] = tamEStep(x(i,:),eta_sum,alpha,log_p_a,old_sigma);
+        [theta(i,:) q_a(i,:) new_counts sigma(i,:) score doc_lv_score doc_word_score] = tamEStep(x(i,:),eta_sum(:,:,aspects(i)),alpha,0,old_sigma);
+        ecounts(:,:,aspects(i)) = ecounts(:,:,aspects(i)) + full(new_counts(:,:));
         doc_lv_score = doc_lv_score + digamma(sum(q_a(:,aspects(i)))) - digamma(sum(sum(q_a))); %E[log P(a_i)] - E[log Q(a_i)]
         
         word_score = word_score + doc_word_score;
@@ -145,7 +147,7 @@ while ~iter.done
     
     %% status
     %iter = updateIterator(iter,total_score);
-    iter = updateDeltaIterator(iter,[reshape(theta,D*K,1); reshape(q_a(1:end-1),D*A,1)]);
+    iter = updateDeltaIterator(iter,[reshape(theta,D*K,1)]);% reshape(q_a(1:end-1),D*A,1)]);
     if ~isempty(vocab)
         if sparse
             if K > 1
