@@ -2,12 +2,12 @@ function [acc theta eta_t eta_a] = sparseTAM(x,K,varargin)
 [sparse aspects alpha gamma_dirichlet te_x te_aspects vocab ...
     seed hyperprior_update_interval compute_perplexity ...
     topic_aspects verbose init_eta_t init_eta_a max_its max_mstep_its ...
-    save_prefix] = ...
+    save_prefix eval_period] = ...
     process_options(varargin,'sparse',1,'aspects',ones(size(x,1),1),'alpha',1/K,...
     'init-gamma-dirichlet',1,'te-x',[],'te-aspects',[],...
     'vocab',[],'seed',[],'hyperprior-update-interval',1,...
     'compute-perplexity',1,'topic-aspects',0,'verbose',1,'init-eta-t',[],...
-    'init-eta-a',[],'max-its',100,'max-mstep-its',100,'save-prefix',[]);
+    'init-eta-a',[],'max-its',100,'max-mstep-its',100,'save-prefix',[],'eval-period',5);
 disp(varargin);
 
 %screen words that have zero counts, because they mess stuff up
@@ -35,9 +35,11 @@ if sparse
     %eta_a (aspects)
     if ~isempty(init_eta_a), eta_a = init_eta_a; else
         eta_a = zeros(W,A);
-        if A>1, for j = 1:A
-                if sum(aspects==j)>0, eta_a(:,j) = eta_a(:,j) + mean(x(aspects==j,:))'; end
-            end; end
+        if A>1
+            for j = 1:A
+                eta_a(:,j) = computeBetaSparseVariational(full(sum(x(aspects==j,:))'),m,'max-its',max_mstep_its);
+            end
+        end
     end
     %eta_ta (interactions)
     eta_ta = zeros(W,K,A);  if topic_aspects && A>1, for j = 1:A, for k = 1:K, eta_ta(:,k,j) = 0.1 * (eta_t(:,k) + eta_a(:,j)); end; end; end
@@ -72,6 +74,7 @@ while ~iter.done
         %[theta(i,:) q_a(i,:) new_counts sigma(i,:) score doc_lv_score
         %doc_word_score] = tamEStep(x(i,:),eta_sum,alpha,log_p_a,old_sigma);
         [theta(i,:) q_a(i,:) new_counts sigma(i,:) score doc_lv_score doc_word_score] = tamEStep(x(i,:),eta_sum(:,:,aspects(i)),alpha,0,old_sigma);
+        q_a(i,:) = 0; q_a(i,aspects(i)) = 1;
         ecounts(:,:,aspects(i)) = ecounts(:,:,aspects(i)) + full(new_counts(:,:));
         doc_lv_score = doc_lv_score + digamma(sum(q_a(:,aspects(i)))) - digamma(sum(sum(q_a))); %E[log P(a_i)] - E[log Q(a_i)]
         
@@ -162,7 +165,7 @@ while ~iter.done
                     end
                 end
                 %same as above (for topics)
-                makeTopicReport(tprod(mean(q_a),[-3],eta_sum,[1 2 -3])',vocab,'N',20);
+                makeTopicReport(tprod(mean(q_a)',[-3],eta_sum,[1 2 -3])',vocab,'N',20);
             end
             if A > 1
                 fprintf(' ----- aspects ----- \n');
@@ -219,7 +222,7 @@ while ~iter.done
             else, pred_topics = logToSimplex2(computeBetaDirichlet(ecounts',gamma_dirichlet)); end
             fprintf('PERPLEX %d: %.5f\n',iter.its,computePerplexity(te_x,pred_topics,alpha));
         end
-        if A > 1 && rem(iter.its,5)==1
+        if A > 1 && rem(iter.its,eval_period)==0
             for i = 1:size(te_x,1)
                 [theta_te(i,:) qa_te(i,:)] = tamEStep(te_x(i,:),eta_sum(:,:,1:max(aspects)),alpha,e_log_a);
             end
