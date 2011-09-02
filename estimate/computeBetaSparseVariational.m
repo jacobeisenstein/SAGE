@@ -23,7 +23,7 @@ em_iter = newDeltaIterator(max_its,'debug',verbose,'thresh',1e-4);
 
 exp_eq_m = exp(eq_m);
 while ~(em_iter.done)
-    eta = newton(@evalLogNormal,eta,{ecounts,exp_eq_m,eq_inv_tau},'debug',verbose==1,'alpha',.1,'max-its',10000);
+    eta = newtonArmijo(@evalLogNormal,eta,{ecounts,exp_eq_m,eq_inv_tau},'debug',verbose==1,'alpha',.1,'max-its',10000);
     eq_inv_tau = 1./(eta.^2);
     eq_inv_tau(eq_inv_tau >= max_inv_tau) = max_inv_tau;
     em_iter = updateDeltaIterator(em_iter,eta);
