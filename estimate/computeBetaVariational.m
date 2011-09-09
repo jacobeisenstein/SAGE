@@ -24,15 +24,19 @@ if verbose==0.5, fprintf('.'); end
 em_iter = newIterator(max_its,'debug',verbose,'thresh',1e-6);
 
 exp_eq_m = exp(eq_m);
-while ~(em_iter.done)
-    [eta fX_newton] = newtonArmijo(@evalLogNormal,eta,{ecounts,exp_eq_m,precision},'debug',verbose==1,'max-its',10000);
-    bound = fX_newton(end);
-    
-    if isempty(given_precision)
-        precision = W./sum(eta.^2);
-        bound = bound + .5 * W * log(precision);
+if sum(sum(ecounts)) == 0
+    eta = zeros(W,K);
+else
+    while ~(em_iter.done)
+        [eta fX_newton] = newtonArmijo(@evalLogNormal,eta,{ecounts,exp_eq_m,precision},'debug',verbose==1,'max-its',10000);
+        bound = fX_newton(end);
+        
+        if isempty(given_precision)
+            precision = W./sum(eta.^2);
+            bound = bound + .5 * W * log(precision);
+        end
+        em_iter = updateIterator(em_iter,bound);
     end
-    em_iter = updateIterator(em_iter,bound);
 end
 word_score = scoreWords(ecounts,logNormalizeRows(repmat(eta,1,K)'+eq_m')');
 lv_score = -.5 * trace(eta' * eta) * precision;
