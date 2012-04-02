@@ -9,3 +9,4 @@ runLDA(5,1,500,'debug',1)
 from the command line in matlab. This will run standard LDA first, then SAGE LDA. If you just want to run SAGE LDA, try:
 
 runLDA(5,1,500,'debug',1,'do-non-sparse',0)
+

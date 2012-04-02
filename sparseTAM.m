@@ -85,7 +85,7 @@ while ~iter.done
         %doc_word_score] = tamEStep(x(i,:),eta_sum,alpha,log_p_a,old_sigma);
         [theta(i,:) q_a(i,:) new_counts sigma(i,:) score doc_lv_score doc_word_score] = tamEStep(x(i,:),eta_sum(:,:,aspects(i)),alpha,0,old_sigma);
         q_a(i,:) = 0; q_a(i,aspects(i)) = 1;
-        ecounts(:,:,aspects(i)) = ecounts(:,:,aspects(i)) + full(new_counts(:,:));
+        ecounts(:,:,aspects(i)) = ecounts(:,:,aspects(i)) + full(new_counts);
         doc_lv_score = doc_lv_score + digamma(sum(q_a(:,aspects(i)))) - digamma(sum(sum(q_a))); %E[log P(a_i)] - E[log Q(a_i)]
         
         word_score = word_score + doc_word_score;
@@ -126,7 +126,7 @@ while ~iter.done
             end
             fprintf(' ');
             if topic_aspects, for k = 1:K, for j=1:A,
-                        assert(sparse);
+                        assert(sparse==1);
                         eq_m = logNormalizeRows(eta_sum(:,k,j)' - eta_ta(:,k,j)');
                         eta_ta(:,k,j) = computeBetaSparseVariational(ecounts(:,k,j),eq_m','max-its',max_mstep_its);
                     end; end;
@@ -271,7 +271,7 @@ function eta_sum = makeEtaSum(m,eta_a,eta_t,eta_ta)
 eta_sum = zeros(W,K,A);
 for j = 1:A
     for k = 1:K
-        eta_sum(:,k,j) = logNormalizeVec(m + eta_a(:,j) + eta_t(:,k) + eta_ta(:,k));
+        eta_sum(:,k,j) = logNormalizeVec(m + eta_a(:,j) + eta_t(:,k) + eta_ta(:,k,j));
     end
 end
 end

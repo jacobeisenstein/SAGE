@@ -1,4 +1,5 @@
 function [theta q_a out_counts sigma score lv_score word_score] = tamEStep(x,beta,alpha,a_log_prior,sigma)
+%function [theta q_a out_counts sigma score lv_score word_score] = tamEStep(x,beta,alpha,a_log_prior,sigma)
 [W K A] = size(beta);
 mydudes = x>0;
 myx = x(mydudes);

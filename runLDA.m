@@ -7,7 +7,7 @@ load(sprintf('data/%s.mat',dataset));
 
 if strcmp(dataset,'20news')
     words = tr_data;
-    [tr_words te_words widx] = preprocess(words,'max-words',W,'debug',debug,'num-folds',10);
+    [tr_words te_words widx tr_idx te_idx] = preprocess(words,'max-words',W,'debug',debug,'num-folds',10);
 else
     [tr_words te_words widx] = preprocess(counts','max-words',W,'holdout',0.1,'debug',debug,'num-folds',50);
     vocab = words;
