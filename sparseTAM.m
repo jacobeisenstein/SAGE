@@ -98,7 +98,7 @@ while ~iter.done
     computeScore(word_score,estep_lv_score,eta_lv_score,prior_prob,'print',1);
     
     %% M-step.
-    if A>1 && K > 1, max_its = 1; else max_its = 0; end
+    if A>1 && K > 1, max_its = 10; else max_its = 0; end
     mstep_iter = newIterator(max_its,'thresh',1e-5,'debug',true);
     if sparse
         eta_t_lv_score = zeros(K,1); eta_a_lv_score = zeros(A,1);
@@ -139,9 +139,9 @@ while ~iter.done
             eta_lv_score = sum(eta_t_lv_score) + sum(eta_a_lv_score) + sum(sum(eta_ta_lv_score));
             fprintf('\n');
             total_score = computeScore(word_score,estep_lv_score,eta_lv_score,prior_prob,'print',0);
-            density_t = sum(sum(abs(eta_t) > 1e-5)) / numel(eta_t);
-            density_a = sum(sum(abs(eta_a) > 1e-5)) / numel(eta_a);
-            density_ta = sum(sum(sum(abs(eta_ta)>1e-5))) / numel(eta_ta);
+            density_t = sum(sum(abs(eta_t) > 1e-4)) / numel(eta_t);
+            density_a = sum(sum(abs(eta_a) > 1e-4)) / numel(eta_a);
+            density_ta = sum(sum(sum(abs(eta_ta)>1e-4))) / numel(eta_ta);
             fprintf('%.3f\tT=%.3f A=%.3f TA=%.3f norm diff=%.3f\n',total_score,density_t,density_a,density_ta,norm(eta_t-old_eta_t,'fro'));
             %mstep_iter = updateIterator(mstep_iter,word_score + eta_lv_score);
             mstep_iter = updateDeltaIterator(mstep_iter,reshape(eta_sum,W,A*K));
@@ -169,7 +169,8 @@ while ~iter.done
                     for k = 1:K
                         for j = 1:A
                             fprintf('K%dA%d\t ',k,j);
-                            makeTopicReport(eta_sum(1:numel(vocab),k,j)',vocab,'N',10,'background',m'); %i'm not sure supplying the background is a good idea
+                            %makeTopicReport(eta_sum(1:numel(vocab),k,j)',vocab,'N',10,'background',m'); %i'm not sure supplying the background is a good idea
+                            makeTopicReport(eta_ta(1:numel(vocab),k,j)',vocab,'N',10); %i'm not sure supplying the background is a good idea
                         end
                         fprintf('\n');
                     end
