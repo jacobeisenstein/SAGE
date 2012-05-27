@@ -1,7 +1,12 @@
 function [ eta ] = hdpSage( x, Kmax, varargin )
 %function [ eta ] = hdpSage( x, Kmax, varargin )
-% from Wang, Paisley and Blei AISTATS 2011 section 3.1, ä new
-% coordinate-ascent variational inference
+% from Wang, Paisley and Blei AISTATS 2011 section 3.1, "A new
+% coordinate-ascent variational inference" (this is not online inference)
+%
+% x = DxW counts matrix
+% Kmax = the maximum number of topics
+% in varargin you may want to supply the vocabulary so that you can see the topics. see runLDA.m if you are not sure how to do this
+
 [maxits a0 gamma max_mstep_its vocab] = process_options(varargin,'max-its',100,'a0',1,'gamma',1,'max-mstep-its',25,'vocab',[]);
 [D W] = size(x);
 m = makeLogProbs(sum(x));
