@@ -4,7 +4,9 @@ function y = randsample(n,k,j)
 %sample without replacement k integers from 1:n
 
 if nargin==2, j = 1; end
-
-[ig idx] = sort(rand(n,j));
-y = idx(1:k,:);
+if numel(n) == 1
+    n = 1:n;
+end
+[ig idx] = sort(rand(numel(n),j));
+y = n(idx(1:k,:));
 end
