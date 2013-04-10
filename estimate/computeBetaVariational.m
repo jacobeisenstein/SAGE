@@ -30,11 +30,12 @@ else
     while ~(em_iter.done)
         [eta fX_newton] = newtonArmijo(@evalLogNormal,eta,{ecounts,exp_eq_m,precision},'debug',verbose==1,'max-its',10000);
         bound = fX_newton(end);
-        
+
         if isempty(given_precision)
             precision = W./sum(eta.^2);
             bound = bound + .5 * W * log(precision);
         end
+        if isinf(bound) break; end
         em_iter = updateIterator(em_iter,bound);
     end
 end

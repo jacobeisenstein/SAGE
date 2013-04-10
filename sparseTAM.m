@@ -1,4 +1,4 @@
-function [acc theta eta_t eta_a] = sparseTAM(x,K,varargin)
+function [acc theta eta_t eta_a qa_te] = sparseTAM(x,K,varargin)
 %function [acc theta eta_t eta_a] = sparseTAM(x,K,varargin)
 %[sparse aspects alpha gamma_dirichlet te_x te_aspects vocab ...
 %    seed hyperprior_update_interval compute_perplexity ...
@@ -222,6 +222,7 @@ while ~iter.done
     end
     
     %% TEST SET
+    qa_te = [];
     if ~isempty(te_x)
         theta_te = zeros(size(te_x,1),K);
         qa_te = zeros(size(te_x,1),max(aspects));
@@ -242,7 +243,7 @@ while ~iter.done
             fprintf('ACC %d: = %.3f\n',iter.its,acc);
         end
     end
-    if ~isempty(save_prefix) && rem(iter.its,5)==1
+    if ~isempty(save_prefix) && rem(iter.its,2)==1
         save(sprintf('%s.%d.mat',save_prefix,iter.its));
     end
 end

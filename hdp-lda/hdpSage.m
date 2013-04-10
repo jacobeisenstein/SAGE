@@ -15,7 +15,7 @@ for k = 1:Kmax, ecounts(k,:) = full(sum(x(randsample(D,5),:))'); end
 iter = newDeltaIterator(maxits,'thresh',1e-4);
 u = ones(Kmax,1); v = gamma * ones(Kmax,1);
 while ~iter.done
-    %mstep
+    %% m-step
     e_log_beta1 = digamma(u) - digamma(u+v);
     e_log_beta2 = digamma(v) - digamma(u+v);
     e_log_beta = e_log_beta1 + [0; cumsum(e_log_beta2(1:end-1))];
@@ -30,6 +30,7 @@ while ~iter.done
         eta = log_pw - repmat(mean(log_pw),Kmax,1); %just for visualization
     end
     
+    %% status
     for k = 1:Kmax
         prevalence = sum(ecounts(k,:)) / sum(sum(ecounts));
         if prevalence > 1/(10*Kmax) & ~isempty(vocab)
@@ -37,6 +38,7 @@ while ~iter.done
         end
     end
     
+    %% e-step
     ecounts = zeros(Kmax,W);
     u = ones(Kmax,1); v = gamma * ones(Kmax,1);
     for d = 1:D
