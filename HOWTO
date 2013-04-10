@@ -1,6 +1,8 @@
 This should run in Matlab from the same directory in which you find this file. 
 
-Before you start, a few mex files will need to be compiled. I've tried to wrap this up into a script, "install_sage.m" 
+Before you start, a few mex files will need to be compiled. I've tried to wrap this up into a script, "install_sage.m"
+
+I have heard that tamEStepMex.c will not compile using VC++. Sorry. It seems to work fine with gcc. Even if you can't compile this, you can still run SAGE. It will automatically call tamEStepNoMex if the mex file is not available.
 
 When you have all this working, try:
 
@@ -9,4 +11,10 @@ runLDA(5,1,500,'debug',1)
 from the command line in matlab. This will run standard LDA first, then SAGE LDA. If you just want to run SAGE LDA, try:
 
 runLDA(5,1,500,'debug',1,'do-non-sparse',0)
+
+-- update 5/27/2012 --
+
+Alternatively, if you want a topic model, you can run hdpSage(x,100) where x is a matrix of docs and counts.
+hdpSage.m is somewhat simpler than sparseTam.m because it doesn't handle aspects.
+So this may be more useful to see how things work.
 
