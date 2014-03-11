@@ -38,9 +38,18 @@ m = makeLogProbs(sum(x))';
 if sparse
     if ~isempty(init_eta_t),eta_t = init_eta_t; else
         eta_t = zeros(W,K);
-        if K>1, for k = 1:K,
-                eta_t(:,k) = computeBetaSparseVariational(full(sum(x(randsample(D,10),:))'),m,'max-its',max_mstep_its,'verbose',0);
-            end; end
+        
+        %need enough words to get a good initialization
+        D_init = round(10000 / (full(sum(sum(x))) / size(x,1)))
+        
+        if K>1, 
+            for k = 1:K,
+                %consider initializing non-sparsely
+                dsamp = randsample(D,D_init);
+                %eta_t_nonsparse = computeBetaVariational(full(sum(x(dsamp,:))'),m,'precision',1);
+                eta_t(:,k) = computeBetaSparseVariational(full(sum(x(dsamp,:))'),m,'max-its',max_mstep_its,'verbose',0);
+            end 
+        end
     end
     %eta_a (aspects)
     if ~isempty(init_eta_a), eta_a = init_eta_a; else
