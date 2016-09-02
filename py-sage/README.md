@@ -1,11 +1,17 @@
 SAGE in Python
 ==========
 
-Run SAGE in Python or from the command line to identify keywords that distinguish parts of your corpus.
+You can run SAGE in Python or from the command line to identify keywords that distinguish parts of your corpus.
 
-# Example command-line usage
+These instructions show you how to do it from the command line.
 
-## Congressional votes
+[This notebook](using-sage.ipynb) shows you how to use SAGE in a Jupyter notebook.
+
+If you use SAGE, please cite [the paper](http://www.icml-2011.org/papers/534_icmlpaper.pdf):
+
+```Eisenstein, Jacob, Amr Ahmed, and Eric P. Xing. "Sparse Additive Generative Models of Text." Proceedings of the 28th International Conference on Machine Learning (ICML-11). 2011.```
+
+# Congressional votes
 
 The Cornell [convote](http://www.cs.cornell.edu/home/llee/data/convote.html) data includes floor speeches from the U.S. Congress. I have extracted a subset of speeches about an appropriations bill. Speeches in favor of the bill are in ```convote-132-yes.txt``` and speeches against are in ```convote-132-no.txt```.
 
@@ -36,3 +42,6 @@ The output is in the form of a TSV file, which I converted to Markdown using [th
 | convote-132-no.txt  | taxpayer   | 0.48954718467824154 | 36         | 0.00026497280348586441 | 35         | 0.00047082245957652882 | 
 | convote-132-no.txt  | bush       | 0.48657112756142901 | 71         | 0.0005225852513193437  | 66         | 0.0008878366380585972  | 
 
+# Second example
+
+Todo: a second example, using the ```basefile``` command line argument. Need to find a good dataset for this.
