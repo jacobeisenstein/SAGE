@@ -1,9 +1,13 @@
 SAGE in Python
 ==========
 
-You can run SAGE in Python or from the command line to identify keywords that distinguish parts of your corpus.
+You can run SAGE in Python or from the command line to identify keywords that distinguish parts of a corpus of text. For example, SAGE can be used to distinguish:
 
-These instructions show you how to do it from the command line.
+- tweets from [different places](http://www.cc.gatech.edu/~jeisenst/papers/dialectology-chapter.pdf) or [across time](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0113114)
+- political speech by party or by vote
+- interests and speaking styles across subreddits
+
+These instructions show you how to use SAGE from the command line.
 
 [This notebook](using-sage.ipynb) shows you how to use SAGE in a Jupyter notebook.
 
